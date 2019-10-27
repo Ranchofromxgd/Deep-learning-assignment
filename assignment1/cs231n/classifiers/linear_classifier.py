@@ -38,6 +38,9 @@ class LinearClassifier(object):
 
     # Run stochastic gradient descent to optimize W
     loss_history = []
+    
+    numbers = np.array(list(range(num_train)))
+    
     for it in xrange(num_iters):
       X_batch = None
       y_batch = None
@@ -53,7 +56,8 @@ class LinearClassifier(object):
       # Hint: Use np.random.choice to generate indices. Sampling with         #
       # replacement is faster than sampling without replacement.              #
       #########################################################################
-      pass
+      indexes = np.random.choice(numbers,size = batch_size,replace = True)
+      X_batch,y_batch = X[indexes],y[indexes]
       #########################################################################
       #                       END OF YOUR CODE                                #
       #########################################################################
@@ -67,13 +71,15 @@ class LinearClassifier(object):
       # TODO:                                                                 #
       # Update the weights using the gradient and the learning rate.          #
       #########################################################################
-      pass
+      self.W -= grad*learning_rate
       #########################################################################
       #                       END OF YOUR CODE                                #
       #########################################################################
 
-      if verbose and it % 100 == 0:
-        print('iteration %d / %d: loss %f' % (it, num_iters, loss))
+      if it % 100 == 0:
+        print(it)
+      # if verbose and it % 100 == 0:
+        # print('iteration %d / %d: loss %f' % (it, num_iters, loss))
 
     return loss_history
 
@@ -96,7 +102,8 @@ class LinearClassifier(object):
     # TODO:                                                                   #
     # Implement this method. Store the predicted labels in y_pred.            #
     ###########################################################################
-    pass
+    result = np.matmul(X,self.W)
+    y_pred = np.argmax(result,axis=)
     ###########################################################################
     #                           END OF YOUR CODE                              #
     ###########################################################################
